@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wake-focus"
+version = "1.0.0"
+description = "Production-grade cross-platform driver monitoring, distraction detection, and fleet navigation system"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [{name = "Wake Focus Team"}]
+
+dependencies = [
+    "PySide6>=6.6.0",
+    "PySide6-Addons>=6.6.0",
+    "opencv-python-headless>=4.8.0",
+    "mediapipe>=0.10.9",
+    "ultralytics>=8.1.0",
+    "paho-mqtt>=2.0.0",
+    "numpy>=1.24.0",
+    "scipy>=1.11.0",
+    "PyYAML>=6.0",
+    "folium>=0.15.0",
+    "requests>=2.31.0",
+    "polyline>=2.0.0",
+    "onnxruntime>=1.16.0",
+    "onnx>=1.16.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "pytest-qt>=4.2.0",
+    "ruff>=0.1.0",
+]
+arm64 = [
+    "onnxruntime>=1.16.0",
+]
+obd = [
+    "obd>=0.7.2",
+]
+
+[project.scripts]
+wake-focus = "wake_focus.__main__:main"
+
+[project.gui-scripts]
+wake-focus-gui = "wake_focus.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+qt_api = "pyside6"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

@@ -1,0 +1,33 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	# Create virtual environment and install
+	python3 -m venv debian/wake-focus/opt/wake-focus/venv
+	debian/wake-focus/opt/wake-focus/venv/bin/pip install --upgrade pip
+	debian/wake-focus/opt/wake-focus/venv/bin/pip install --no-build-isolation --no-deps .
+	# Copy config
+	mkdir -p debian/wake-focus/etc/wake-focus
+	cp config/default_config.yaml debian/wake-focus/etc/wake-focus/config.yaml
+
+override_dh_auto_install:
+	# Create launcher script
+	mkdir -p debian/wake-focus/usr/bin
+	echo '#!/bin/bash' > debian/wake-focus/usr/bin/wake-focus
+	echo 'exec /opt/wake-focus/venv/bin/python -m wake_focus --config /etc/wake-focus/config.yaml "$$@"' >> debian/wake-focus/usr/bin/wake-focus
+	chmod +x debian/wake-focus/usr/bin/wake-focus
+	# Desktop entry
+	mkdir -p debian/wake-focus/usr/share/applications
+	echo '[Desktop Entry]' > debian/wake-focus/usr/share/applications/wake-focus.desktop
+	echo 'Name=Wake Focus' >> debian/wake-focus/usr/share/applications/wake-focus.desktop
+	echo 'Comment=Driver Monitoring & Fleet Navigation' >> debian/wake-focus/usr/share/applications/wake-focus.desktop
+	echo 'Exec=/usr/bin/wake-focus' >> debian/wake-focus/usr/share/applications/wake-focus.desktop
+	echo 'Terminal=false' >> debian/wake-focus/usr/share/applications/wake-focus.desktop
+	echo 'Type=Application' >> debian/wake-focus/usr/share/applications/wake-focus.desktop
+	echo 'Categories=Utility;' >> debian/wake-focus/usr/share/applications/wake-focus.desktop
+
+override_dh_auto_test:
+	# Skip tests during package build
+	true

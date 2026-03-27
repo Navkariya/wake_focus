@@ -1,0 +1,10 @@
+wake-focus (1.0.0-1) unstable; urgency=medium
+
+  * Initial release
+  * Camera-based drowsiness detection (MediaPipe + EAR)
+  * YOLO26 object distraction detection
+  * GPS fleet tracking via MQTT
+  * OSRM incident-aware rerouting
+  * Support for x86_64 and ARM64
+
+ -- Wake Focus Team <wakefocus@example.com>  Thu, 27 Mar 2026 10:00:00 +0500

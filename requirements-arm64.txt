@@ -1,0 +1,24 @@
+# Wake Focus - ARM64 (Orange Pi Zero 2W) Dependencies
+# Lighter alternatives for resource-constrained devices
+
+PySide6>=6.6.0
+PySide6-Addons>=6.6.0
+opencv-python-headless>=4.8.0
+numpy>=1.24.0
+scipy>=1.11.0
+PyYAML>=6.0
+folium>=0.15.0
+requests>=2.31.0
+paho-mqtt>=2.0.0
+polyline>=2.0.0
+
+# MediaPipe may need to be built from source on ARM64
+# pip install mediapipe  # Try first; if fails, build from source
+mediapipe>=0.10.9
+
+# ONNX Runtime for lighter YOLO inference on ARM
+onnxruntime>=1.16.0
+onnx>=1.16.0
+
+# Ultralytics for model loading/export (can use ONNX backend)
+ultralytics>=8.1.0

@@ -1,0 +1,27 @@
+# Wake Focus - Edge Configuration (Orange Pi Zero 2W)
+# Optimized for ARM64 Cortex-A53, limited RAM
+
+# Override only what differs from default_config.yaml
+
+camera:
+  width: 640
+  height: 480
+  fps: 30
+
+perception:
+  frame_skip: 3  # Process every 3rd frame
+  max_processing_fps: 8
+  object_detection_interval_frames: 4
+  face_mesh:
+    min_detection_confidence: 0.4
+    min_tracking_confidence: 0.4
+  object_detection:
+    model_path: "models/yolo26n.onnx"  # ONNX for lighter inference
+    confidence_threshold: 0.45
+    imgsz: 320  # Reduced input size
+
+map:
+  update_interval_ms: 2000  # Less frequent map updates
+
+fleet:
+  telemetry_interval: 2.0  # Less frequent telemetry

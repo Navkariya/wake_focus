@@ -1,0 +1,30 @@
+# Wake Focus - Python Dependencies
+# Install: pip install -r requirements.txt
+
+PySide6>=6.6.0
+PySide6-Addons>=6.6.0
+opencv-python-headless>=4.8.0
+mediapipe>=0.10.9
+ultralytics>=8.1.0
+paho-mqtt>=2.0.0
+numpy>=1.24.0
+scipy>=1.11.0
+PyYAML>=6.0
+folium>=0.15.0
+requests>=2.31.0
+polyline>=2.0.0
+onnxruntime>=1.16.0
+onnx>=1.16.0
+
+# Optional vehicle integration
+# The import name is `obd`, but the dependency is intentionally left out of the
+# base install because it is not available on every platform/Python combo and
+# the app already falls back cleanly when OBD support is absent.
+# Install separately when needed:
+#   pip install obd>=0.7.2
+
+# Development
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-qt>=4.2.0
+ruff>=0.1.0

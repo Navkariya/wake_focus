@@ -1,0 +1,10 @@
+cell_phone
+paper
+tablet
+food_drink
+cigarette
+book
+handheld_device
+makeup_tool
+wallet
+headphones

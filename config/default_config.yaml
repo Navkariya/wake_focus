@@ -1,0 +1,155 @@
+# Wake Focus - Default Configuration
+# All values can be overridden via config file or environment variables
+
+app:
+  name: "Wake Focus"
+  version: "1.0.0"
+  window_width: 800
+  window_height: 800
+  theme: "dark"
+  log_level: "INFO"
+  log_file: "wake_focus.log"
+
+camera:
+  device_index: 0
+  width: 640
+  height: 480
+  fps: 30
+  # Set to true for simulation mode (no real camera)
+  simulation: false
+
+perception:
+  # Frame skip: process every Nth frame for inference (1 = every frame)
+  frame_skip: 1
+  # Keep camera/video updates smooth while throttling heavy CPU inference.
+  max_processing_fps: 10
+  # Run YOLO every Nth processed frame and reuse cached detections between runs.
+  object_detection_interval_frames: 2
+  # MediaPipe Face Mesh
+  face_mesh:
+    max_num_faces: 1
+    refine_landmarks: true
+    min_detection_confidence: 0.5
+    min_tracking_confidence: 0.5
+  # YOLO26 Object Detection
+  object_detection:
+    model_path: "models/yolo26n.onnx"
+    confidence_threshold: 0.5
+    iou_threshold: 0.45
+    imgsz: 640
+    # YOLO26 COCO classes / aliases for driver distraction:
+    # paper/document are mapped to YOLO's `book` class as a practical proxy.
+    target_classes:
+      - "cell phone"
+      - "phone"
+      - "paper"
+      - "document"
+      - "book"
+      - "laptop"
+      - "mouse"
+      - "remote"
+      - "keyboard"
+      - "electronic gadget"
+
+alerts:
+  # Drowsiness (<<ogohlantirish>>)
+  drowsiness:
+    ear_threshold: 0.21
+    blink_consec_frames: 3
+    drowsy_consec_frames: 20
+    beep_interval_seconds: 1.0
+    recovery_stable_seconds: 3.0
+  # Distraction (<<ogohlantirish2>>)
+  distraction:
+    onset_seconds: 30.0
+    beep_interval_seconds: 5.0
+    beeps_per_alert: 2
+    recovery_stable_seconds: 3.0
+    # Head pose thresholds (degrees)
+    yaw_threshold: 30.0
+    pitch_threshold: 25.0
+  # Border rendering
+  border:
+    thickness_mm: 2.0
+    fallback_thickness_px: 8
+    drowsy_color: [255, 0, 0]       # Red (RGB)
+    distraction_color: [255, 165, 0] # Orange (RGB)
+  # Audio
+  audio:
+    beep_frequency_hz: 440
+    beep_duration_ms: 200
+    beep_volume: 0.8
+
+gps:
+  # Source: "gpsd", "serial", "simulation"
+  source: "simulation"
+  # gpsd settings
+  gpsd_host: "localhost"
+  gpsd_port: 2947
+  # Serial GPS
+  serial_port: "/dev/ttyUSB0"
+  serial_baud: 9600
+  # Update rate (Hz)
+  update_rate: 1.0
+  # Simulation route (lat/lon waypoints)
+  simulation_route:
+    - [41.311, 69.279]
+    - [41.312, 69.281]
+    - [41.314, 69.283]
+    - [41.316, 69.285]
+
+map:
+  provider: "yandex"
+  default_zoom: 15
+  default_center: [41.311, 69.279]
+  update_interval_ms: 1000
+  auto_follow: true
+  yandex:
+    # Set here or via the YANDEX_MAPS_API_KEY environment variable.
+    api_key: ""
+    lang: "en_US"
+    traffic_enabled: true
+
+fleet:
+  # Device identity
+  device_id: ""  # Auto-generated UUID if empty
+  device_name: "WakeFocus-Device"
+  # MQTT broker
+  mqtt:
+    broker_host: "localhost"
+    broker_port: 1883
+    use_tls: false
+    username: ""
+    password: ""
+    # Topic prefix
+    topic_prefix: "wake_focus"
+  # Heartbeat interval (seconds)
+  heartbeat_interval: 5.0
+  # Telemetry publish interval (seconds)
+  telemetry_interval: 1.0
+
+routing:
+  # OSRM server URL
+  osrm_url: "http://router.project-osrm.org"
+  # Enable routing features
+  enabled: true
+  # Request alternatives
+  alternatives: true
+  # Incident avoidance radius (meters)
+  incident_avoidance_radius: 500
+  # Auto-reroute or suggest
+  auto_reroute: false
+
+vehicle:
+  # Fuel economy (L/100km) for estimation when OBD not available
+  fuel_economy: 8.0
+  # OBD-II
+  obd:
+    enabled: false
+    port: ""  # Auto-detect if empty
+    baud: 38400
+
+profile:
+  driver_name: ""
+  vehicle_id: ""
+  fleet_group: "default"

@@ -1,0 +1,23 @@
+# Wake Focus - YOLO11 Dataset Configuration
+# Place this file alongside your dataset directory
+
+path: ./datasets/wake_focus_distraction  # Dataset root
+train: images/train
+val: images/val
+test: images/test
+
+# Number of classes
+nc: 10
+
+# Class names
+names:
+  0: cell_phone
+  1: paper
+  2: tablet
+  3: food_drink
+  4: cigarette
+  5: book
+  6: handheld_device
+  7: makeup_tool
+  8: wallet
+  9: headphones
